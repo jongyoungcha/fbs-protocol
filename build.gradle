@@ -2,7 +2,7 @@ buildscript {
     ext {
         protobufVersion = '3.14.0'
         protobufPluginVersion = '0.8.14'
-        grpcVersion = '1.35.0'
+        grpcVersion = '1.37'
     }
 }
 
@@ -26,8 +26,8 @@ protobuf {
         artifact = "com.google.protobuf:protoc:${protobufVersion}"
     }
     generatedFilesBaseDir = "$projectDir/src/generated"
+    delete generatedFilesBaseDir
     clean {
-        delete generatedFilesBaseDir
     }
     plugins {
         grpc {

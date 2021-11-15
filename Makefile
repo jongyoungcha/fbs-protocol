@@ -2,6 +2,8 @@ CC=$(GOROOT)/bin/go
 MOD=${GOPATH}/pkg/mod
 PWD=$(shell pwd)
 TARGET=fbs
+env GO111MODULE=on
+
 
 proto:
 	@echo "### Start building FBS protocol ###"
@@ -35,22 +37,22 @@ proto:
 	@echo "### Building FBS protocol is done ###"
 
 install-linux: install-base
-	curl -o ./protoc-gen-java-grpc https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.41.0/protoc-gen-grpc-java-1.41.0-linux-x86_64.exe
+	curl -o ./protoc-gen-java-grpc https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.37.0/protoc-gen-grpc-java-1.37.0-linux-x86_64.exe
 	chmod 0755 ./protoc-gen-java-grpc
 	mv ./protoc-gen-java-grpc /usr/local/bin/protoc-gen-java-grpc
 
 install-osx: install-base
-	curl -o ./protoc-gen-java-grpc https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.41.0/protoc-gen-grpc-java-1.41.0-osx-x86_64.exe
+	curl -o ./protoc-gen-java-grpc https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.37.0/protoc-gen-grpc-java-1.37.0-osx-x86_64.exe
 	chmod 0755 ./protoc-gen-java-grpc
 	mv ./protoc-gen-java-grpc /usr/local/bin/protoc-gen-java-grpc
 
 install-base:
+	GO111MODULE=on \
 	go install \
-	github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
-	github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
-	google.golang.org/protobuf/cmd/protoc-gen-go \
-	google.golang.org/grpc/cmd/protoc-gen-go-grpc \
-	github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+        github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
+        github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
+        google.golang.org/protobuf/cmd/protoc-gen-go \
+        google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 .PHONY: all \
 	proto \
